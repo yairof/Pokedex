@@ -16,6 +16,11 @@ class Pokemon {
         name = jsonDictionary["name"] as! String
         detailUrl = jsonDictionary["url"] as! String
     }
+
+    init(name: String, detailUrl: String) {
+        self.name = name
+        self.detailUrl = detailUrl
+    }
     
     
 }
