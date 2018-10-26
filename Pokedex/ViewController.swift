@@ -14,9 +14,18 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        callApi()
-        // Do any additional setup after loading the view, typically from a nib.
+
+//        callApi()
+        populatePokemonArrayWithDefaultValue()
+        displayPokemonList()
+    }
+
+    func populatePokemonArrayWithDefaultValue() {
+        pokemon = [
+            Pokemon(name: "bulbasaur", detailUrl: "https://pokeapi.co/api/v2/pokemon/1/"),
+            Pokemon(name: "charmander", detailUrl: "https://pokeapi.co/api/v2/pokemon/4/"),
+            Pokemon(name: "squirtle", detailUrl: "https://pokeapi.co/api/v2/pokemon/7/"),
+        ]
     }
     
     func callApi() {
@@ -56,6 +65,11 @@ class ViewController: UIViewController {
         for aPokemon in unwrappedPokemon {
             print(aPokemon.name)
         }
+
+        // TODO:
+        // Once there is a table view, this will force the tableView to
+        // update itself and get the latest data from your UITableViewDatasource methods
+        // self.tableView.reloadData()
         
     }
 
