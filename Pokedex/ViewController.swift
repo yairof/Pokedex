@@ -9,15 +9,27 @@
 import UIKit
 import Alamofire
 
-class ViewController: UIViewController {
-    var pokemon: [Pokemon]?
+class ViewController: UIViewController, UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    var pokemon: [Pokemon]?
+    
+//    for pokemonJSON in pokemonJSONArray {
+//        let pokemonAppend = Pokemon(jsonDictionary: pokemonJSON)
+//        pokemonArray.append(object)
+//    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.dataSource = self
+        
         callApi()
+        
+        }
         // Do any additional setup after loading the view, typically from a nib.
-    }
     
     func callApi() {
         Alamofire.request("https://pokeapi.co/api/v2/pokemon/").responseJSON { (response) in
@@ -34,7 +46,8 @@ class ViewController: UIViewController {
                         result.append(object)
                     }
                     self.pokemon = result
-                    self.displayPokemonList()
+                    self.tableView.reloadData()
+                    self.displayPokemonList()                    
                 }
                 
                 print("JSON: \(json)") // serialized json response
@@ -57,6 +70,31 @@ class ViewController: UIViewController {
             print(aPokemon.name)
         }
         
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let numberOfRows = pokemon?.count {
+            return numberOfRows
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonList") as! CustomTableViewCell
+        
+        // string formatting
+        if let currentPokemon = pokemon?[indexPath.row] {
+            cell.lbl.text = String(format: "%d. %@", indexPath.row + 1,currentPokemon.name.capitalized)
+        }
+        
+        
+        return cell
     }
 
 }
