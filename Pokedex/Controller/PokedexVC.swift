@@ -68,6 +68,9 @@ class PokedexVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
     }
     
+    
+    // MARK - Table Functions
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -75,6 +78,7 @@ class PokedexVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             return
         }
         let selectedPokemon = pokemonArray[indexPath.row]
+        
         let detail = PokemonDetailViewController(pokemon: selectedPokemon)
         navigationController?.pushViewController(detail, animated: true)
     }
