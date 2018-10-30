@@ -9,22 +9,18 @@
 import UIKit
 import Alamofire
 
-class ViewController: UIViewController, UITableViewDataSource {
+class PokedexVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var pokemon: [Pokemon]?
-    
-//    for pokemonJSON in pokemonJSONArray {
-//        let pokemonAppend = Pokemon(jsonDictionary: pokemonJSON)
-//        pokemonArray.append(object)
-//    }
+    var pokemonArray: [Pokemon]?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.dataSource = self
+        tableView.delegate = self
         
         callApi()
         
@@ -45,7 +41,7 @@ class ViewController: UIViewController, UITableViewDataSource {
                         let object = Pokemon(jsonDictionary: pokemonJSON)
                         result.append(object)
                     }
-                    self.pokemon = result
+                    self.pokemonArray = [Pokemon].init(result[0...801])
                     self.tableView.reloadData()
                     self.displayPokemonList()                    
                 }
@@ -61,7 +57,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     
     func displayPokemonList() {
-        guard let unwrappedPokemon = pokemon else {
+        guard let unwrappedPokemon = pokemonArray else {
             return
         }
         
@@ -72,15 +68,29 @@ class ViewController: UIViewController, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let pokemonAlert = pokemonArray?[indexPath.row]
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let alertController = UIAlertController(title: "Hint", message: "You have selected row \(String(describing: pokemonAlert?.name))", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+        
+        alertController.addAction(alertAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let numberOfRows = pokemon?.count {
-            return numberOfRows
+        if let pokemonArray = pokemonArray {
+            return pokemonArray.count
         }
+
         return 0
     }
     
@@ -89,8 +99,8 @@ class ViewController: UIViewController, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonList") as! CustomTableViewCell
         
         // string formatting
-        if let currentPokemon = pokemon?[indexPath.row] {
-            cell.lbl.text = String(format: "%d. %@", indexPath.row + 1,currentPokemon.name.capitalized)
+        if let currentPokemon = pokemonArray?[indexPath.row] {
+            cell.lbl.text = String(format: "%@. %@", currentPokemon.numberFromURL(), currentPokemon.name.capitalized)
         }
         
         
