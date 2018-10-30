@@ -69,17 +69,14 @@ class PokedexVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let pokemonAlert = pokemonArray?[indexPath.row]
-        
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let alertController = UIAlertController(title: "Hint", message: "You have selected row \(String(describing: pokemonAlert?.name))", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
-        
-        alertController.addAction(alertAction)
-        
-        present(alertController, animated: true, completion: nil)
+
+        guard let pokemonArray = pokemonArray else {
+            return
+        }
+        let selectedPokemon = pokemonArray[indexPath.row]
+        let detail = PokemonDetailViewController(pokemon: selectedPokemon)
+        navigationController?.pushViewController(detail, animated: true)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
