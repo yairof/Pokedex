@@ -11,9 +11,13 @@ import Foundation
 class Pokemon {
     let name: String
     let detailUrl: String
-    var height: Double = 0
-    var weight: Double = 0
+    /// The height of this Pokémon in decimetres.
+    var height: Int = 0
+    /// The weight of this Pokémon in hectograms.
+    var weight: Int = 0
     var hasDetails: Bool = false
+    /// The stats this Pokemon has. This will be `nil` until the details have been fetched.
+    var stats: [PokemonStat]? = nil
     
     init(jsonDictionary: [String: Any]) {
         name = jsonDictionary["name"] as! String
@@ -35,9 +39,22 @@ class Pokemon {
     }
     
     func populateFromDetailJSONDictionary(json: [String: Any]) {
-        self.height = json["height"] as! Double
-        self.weight = json["weight"] as! Double
+        self.height = json["height"] as! Int
+        self.weight = json["weight"] as! Int
         self.hasDetails = true
+
+        // Get the array of stat dictionaries.
+        // The type [[String: Any]] means "array of  [String: Any]" or "array of dictionaries, with String keys and values of "Any" type.
+        if let statDictionaries = json["stats"] as? [[String: Any]] {
+
+            var parsedStats = [PokemonStat]() // Array of `PokemonStat` objects
+            for statDict in statDictionaries {
+                let stat = PokemonStat(jsonDictionary: statDict)
+                parsedStats.append(stat)
+            }
+
+            self.stats = parsedStats
+        }
     }
     
 }
