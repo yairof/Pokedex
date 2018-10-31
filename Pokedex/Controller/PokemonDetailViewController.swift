@@ -60,18 +60,17 @@ class PokemonDetailViewController: UIViewController {
         if self.myPokemon.hasDetails {
             // Build up the `pokeDescription` string with all the information we have
             var pokeDescription = ""
-            pokeDescription.append(self.myPokemon.name)
-            pokeDescription.append("\n")
+            pokeDescription.append("\(self.myPokemon.id).\(self.myPokemon.name.capitalized)\n")
             pokeDescription.append("Height: \(self.myPokemon.height)\n")
             pokeDescription.append("Weight: \(self.myPokemon.weight)\n")
-
-            if let stats = self.myPokemon.stats {
+            pokeDescription.append("Base Experience: \(self.myPokemon.baseExperience)\n")
+              if let stats = self.myPokemon.stats {
                 pokeDescription.append("\nStats:\n")
 
                 for stat in stats {
                     pokeDescription.append("\(stat.displayString)\n")
                 }
-            }
+              }
 
             self.testLabel.text = pokeDescription
         } else {

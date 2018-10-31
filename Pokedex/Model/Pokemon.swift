@@ -15,6 +15,9 @@ class Pokemon {
     var height: Int = 0
     /// The weight of this Pokémon in hectograms.
     var weight: Int = 0
+    var baseExperience: Int = 0
+    var id: Int = 0
+
     var hasDetails: Bool = false
     /// The stats this Pokemon has. This will be `nil` until the details have been fetched.
     var stats: [PokemonStat]? = nil
@@ -41,6 +44,9 @@ class Pokemon {
     func populateFromDetailJSONDictionary(json: [String: Any]) {
         self.height = json["height"] as! Int
         self.weight = json["weight"] as! Int
+
+        self.baseExperience = json["base_experience"] as! Int
+        self.id = json["id"] as! Int
         self.hasDetails = true
 
         // Get the array of stat dictionaries.
