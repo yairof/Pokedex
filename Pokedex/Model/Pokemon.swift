@@ -13,6 +13,8 @@ class Pokemon {
     let detailUrl: String
     var height: Double = 0
     var weight: Double = 0
+    var baseExperience: Double = 0
+    var id: Int = 0
     var hasDetails: Bool = false
     
     init(jsonDictionary: [String: Any]) {
@@ -37,6 +39,8 @@ class Pokemon {
     func populateFromDetailJSONDictionary(json: [String: Any]) {
         self.height = json["height"] as! Double
         self.weight = json["weight"] as! Double
+        self.baseExperience = json["base_experience"] as! Double
+        self.id = json["id"] as! Int
         self.hasDetails = true
     }
     
