@@ -11,12 +11,12 @@ import Foundation
 class Pokemon {
     let name: String
     let detailUrl: String
+    var id: Int = 0
     /// The height of this Pokémon in decimetres.
     var height: Int = 0
     /// The weight of this Pokémon in hectograms.
     var weight: Int = 0
     var baseExperience: Int = 0
-    var id: Int = 0
 
     var hasDetails: Bool = false
     /// The stats this Pokemon has. This will be `nil` until the details have been fetched.
