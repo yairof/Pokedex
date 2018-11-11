@@ -44,7 +44,6 @@ class PokemonStat {
     var displayString: String {
         // TODO: Make this better so the tests pass
         
-        
-        return name
+        return name.capitalized + " (Base value: \(baseStat))"
     }
 }
