@@ -61,6 +61,13 @@ class PokemonDetailViewController: UIViewController {
             // Build up the `pokeDescription` string with all the information we have
             var pokeDescription = ""
             pokeDescription.append("\(self.myPokemon.id).\(self.myPokemon.name.capitalized)\n")
+            if let types = self.myPokemon.types {
+                pokeDescription.append("\nTypes:\n")
+                
+                for type in types {
+                    pokeDescription.append("\(type.name)\n")
+                }
+            }
             pokeDescription.append("Height: \(self.myPokemon.height)\n")
             pokeDescription.append("Weight: \(self.myPokemon.weight)\n")
             pokeDescription.append("Base Experience: \(self.myPokemon.baseExperience)\n")
@@ -71,6 +78,7 @@ class PokemonDetailViewController: UIViewController {
                     pokeDescription.append("\(stat.displayString)\n")
                 }
               }
+            
 
             self.testLabel.text = pokeDescription
         } else {

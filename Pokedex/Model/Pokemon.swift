@@ -17,6 +17,8 @@ class Pokemon {
     /// The weight of this Pokémon in hectograms.
     var weight: Int = 0
     var baseExperience: Int = 0
+    // Pokemon Type
+    var types: [PokemonType]?
 
     var hasDetails: Bool = false
     /// The stats this Pokemon has. This will be `nil` until the details have been fetched.
@@ -60,6 +62,16 @@ class Pokemon {
             }
 
             self.stats = parsedStats
+        }
+        if let typeDictionaries = json["types"] as? [[String: Any]] {
+            
+            var parsedTypes = [PokemonType]() // Array of `PokemonStat` objects
+            for typeDict in typeDictionaries {
+                let type = PokemonType(jsonDictionary: typeDict)
+                parsedTypes.append(type)
+            }
+            
+            self.types = parsedTypes
         }
     }
     
